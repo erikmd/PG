@@ -54,11 +54,12 @@
 ;;   mostly mode hooks and autoloads).
 
 ;;;###autoload
-(if t (require 'proof-site
-               (expand-file-name "generic/proof-site"
-                                 (file-name-directory
-                                  (or ((and load-in-progress load-file-name)
-				       (buffer-file-name))))))
+(unless (bound-and-true-p byte-compile-current-file)
+  (require 'proof-site
+	   (expand-file-name "generic/proof-site"
+			     (file-name-directory
+			      (or ((and load-in-progress load-file-name)
+				   (buffer-file-name)))))))
 
 (eval-when-compile
   ;; FIXME: This is used during installation of the ELPA package:
