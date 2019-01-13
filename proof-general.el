@@ -57,7 +57,8 @@
 (if t (require 'proof-site
                (expand-file-name "generic/proof-site"
                                  (file-name-directory
-                                  (or load-file-name buffer-file-name)))))
+                                  (or (and load-in-progress load-file-name)
+				       (buffer-file-name))))))
 
 (eval-when-compile
   ;; FIXME: This is used during installation of the ELPA package:
@@ -73,9 +74,9 @@
            ;; them for the compilation to succeed for me.  --Stef
            "isar" "lego" "twelf" "obsolete/plastic"))
         (root (file-name-directory
-               (or load-file-name
+               (or (and load-in-progress load-file-name)
 		   (bound-and-true-p byte-compile-current-file)
-		   buffer-file-name))))
+		   (buffer-file-name)))))
     (dolist (dir byte-compile-directories)
       (add-to-list 'load-path (expand-file-name dir root)))))
 
